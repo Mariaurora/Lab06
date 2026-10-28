@@ -29,3 +29,25 @@ class Controller:
 
     # Altre Funzioni Event Handler
     # TODO
+    def mostra_strumenti(self,e):
+        self._view.lista_strumenti.controls.clear()
+        if self._model.get_strumenti() is None:
+            self._view.lista_strumenti.controls.append(ft.Text('Il DATABASE non contiene strumenti oppure non si è stabilita la connessione'))
+        for strumento in self._model.get_strumenti():
+            stato = "✅" if strumento.disponibile else "⛔"
+            self._view.lista_strumenti.controls.append(ft.Text(f"{stato} {strumento}"))
+        self._view.update()
+
+    def cerca_strumenti_per_tipo(self,e):
+        self._view.lista_strumenti_ricerca.controls.clear()
+        tipo=self._view.input_tipo_strumento.value
+        if self._model.cerca_strumenti_per_tipo(tipo) is None:
+            self._view.lista_strumenti_ricerca.controls.append(ft.Text(f'LA RICERCA PER STRUMENTI DI TIPO : {tipo} NON HA PRODOTTO RISULTATI'))
+        else:
+           self._view.lista_strumenti_ricerca.controls.append(ft.Text(f'----STRUMENTI DI TIPO : {tipo}---- '))
+           for strumento in self._model.cerca_strumenti_per_tipo(tipo):
+             stato = "✅" if strumento.disponibile else "⛔"
+             self._view.lista_strumenti_ricerca.controls.append(ft.Text(f"{stato} {strumento}"))
+
+        self._view.update()
+

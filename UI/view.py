@@ -1,5 +1,8 @@
+from typing import cast
+
 import flet as ft
 from UI.alert import AlertManager
+
 
 '''
     VIEW:
@@ -17,7 +20,6 @@ class View:
 
         # Alert
         self.alert = AlertManager(page)
-
         # Controller
         self.controller = None
 
@@ -63,7 +65,11 @@ class View:
         pulsante_conferma_responsabile = ft.Button("Conferma", on_click=self.controller.conferma_responsabile)
 
         # Altri Pulsanti da implementare (es. "Mostra" e "Cerca")
-        # TODO
+        # titolo per strumenti
+        testo_strumenti=ft.Text("Strumenti",size=20)
+        #pulsante mostra
+        pulsante_mostrare_strumenti=ft.Button("Mostra",on_click=self.controller.mostra_strumenti)
+        pulsante_cercare_strumenti=ft.Button("Cercare",on_click=self.controller.cerca_strumenti_per_tipo)
 
         # --- LAYOUT ---
         self.page.add(
@@ -82,10 +88,18 @@ class View:
             ft.Divider(),
 
             # Sezione 3
-            # TODO
 
+            ft.Row(controls=[testo_strumenti, pulsante_mostrare_strumenti],
+                   alignment=ft.MainAxisAlignment.START),
+            self.lista_strumenti,
+            ft.Divider(),
             # Sezione 4
-            # TODO
+            ft.Text("Cerca Strumento per Tipo", size=20),
+            ft.Row(controls=[self.input_tipo_strumento, pulsante_cercare_strumenti],
+                               alignment=ft.MainAxisAlignment.START),
+            self.lista_strumenti_ricerca
+
+
         )
 
     def cambia_tema(self, e):
