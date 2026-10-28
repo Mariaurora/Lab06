@@ -32,7 +32,7 @@ class Controller:
     def mostra_strumenti(self,e):
         self._view.lista_strumenti.controls.clear()
         if self._model.get_strumenti() is None:
-            self._view.lista_strumenti.controls.append(ft.Text('Il DATABASE non contiene strumenti oppure non si è stabilita la connessione'))
+             self._view.alert.show_alert('Il DATABASE non contiene strumenti oppure non si è stabilita la connessione')
         for strumento in self._model.get_strumenti():
             stato = "✅" if strumento.disponibile else "⛔"
             self._view.lista_strumenti.controls.append(ft.Text(f"{stato} {strumento}"))
@@ -42,9 +42,9 @@ class Controller:
         self._view.lista_strumenti_ricerca.controls.clear()
         tipo=self._view.input_tipo_strumento.value
         if self._model.cerca_strumenti_per_tipo(tipo) is None:
-            self._view.lista_strumenti_ricerca.controls.append(ft.Text(f'LA RICERCA PER STRUMENTI DI TIPO : {tipo} NON HA PRODOTTO RISULTATI'))
+            self._view.alert.show_alert(f'La ricerca per strumenti di tipo "{tipo}" non ha prodotto risultati')
         else:
-           self._view.lista_strumenti_ricerca.controls.append(ft.Text(f'----STRUMENTI DI TIPO : {tipo}---- '))
+           self._view.lista_strumenti_ricerca.controls.append(ft.Text(f'----STRUMENTI DI TIPO {tipo}---- '))
            for strumento in self._model.cerca_strumenti_per_tipo(tipo):
              stato = "✅" if strumento.disponibile else "⛔"
              self._view.lista_strumenti_ricerca.controls.append(ft.Text(f"{stato} {strumento}"))
